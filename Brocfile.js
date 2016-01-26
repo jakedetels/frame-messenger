@@ -1,4 +1,4 @@
-const babel = require('broccoli-babel-transpiler');
+var babel = require('broccoli-babel-transpiler');
 
 var tree = babel('lib', {
   modules: 'umd',

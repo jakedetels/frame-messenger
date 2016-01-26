@@ -1,4 +1,4 @@
-/* global FrameMessenger */
+/* global FrameMessenger, RSVP */
 
 var expect = chai.expect;
 
@@ -37,7 +37,7 @@ context('communicating between frames', function() {
 
     iframe = document.createElement('iframe');
     var html = '<!doctype html><html><head></head><body>' + 
-      '<script src="http://localhost:4300/FrameMessenger.js"></script>' +
+      '<script src="dist/FrameMessenger.js"></script>' +
       '<script>top.beforeEachDone()</script>' +
       '</body></html>';
 
@@ -50,7 +50,6 @@ context('communicating between frames', function() {
     iDoc.open();
     iDoc.write(html);
     iDoc.close();
-
   });
 
   afterEach(function removeIframe() {
@@ -62,7 +61,6 @@ context('communicating between frames', function() {
 
   var comm1, comm2;
   beforeEach(function createMessengers() {
-    
     comm1 = new FrameMessenger({
       frame: window,
       targetFrame: iWin,
@@ -130,13 +128,10 @@ context('communicating between frames', function() {
 
 
   describe('communicating with promises', function() {
-    if (typeof Promise === 'undefined') {
-      console.log('Promise is undefined in this browser');
-      return;
-    }
+
     beforeEach(function() {
-      comm1.Promise = comm1.frame.Promise;
-      comm2.Promise = comm2.frame.Promise;
+      comm1.Promise = RSVP.Promise;
+      comm2.Promise = RSVP.Promise;
     });
 
     it('can await a response from another frame', function() {
