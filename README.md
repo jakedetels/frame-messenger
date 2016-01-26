@@ -26,18 +26,23 @@ var messenger = new FrameMessenger({
 ### Options
 
 `frame` *{Window} required* 
+
 Frame should be a reference to the current window (i.e., `window`)
 
 `name` *{String} required* 
+
 An arbriary name to assign to the current frame. Other frames must use this name when initiating communication.
 
 `targetFrame` *{Window} required* 
+
 A reference to the frame we will be communicating with (e.g., `parent`, `top`, `opener`, `iframeEl.contentWindow`)
 
 `targetName` *{Window} required* 
+
 An arbriary name to assign to the other frame we want to communicate with.  The other frame must use this same name to reference itself (see examples below).
 
 `Promise` *{Promise constructor} optional* 
+
 A promise constructor to use for creating promises.  When not passed, regular node-style callbacks will be used.
 
 ## `messenger.postMessage()`
