@@ -1,0 +1,20 @@
+{
+  "name": "frame-messenger",
+  "version": "1.0.0",
+  "description": "a promise-friendly class for communicating between browser frames",
+  "main": "dist/FrameMessenger.js",
+  "author": "Jake Detels",
+  "scripts": {
+    "start": "(if exist dist rmdir dist /s /q) && broccoli build dist",
+    "test": "broccoli serve --port 4300 | testem"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jakedetels/frame-messenger.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "broccoli": "^0.16.9",
+    "broccoli-babel-transpiler": "^5.5.0"
+  }
+}
