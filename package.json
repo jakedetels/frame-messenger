@@ -6,8 +6,8 @@
   "author": "Jake Detels",
   "scripts": {
     "start": "(if exist dist rmdir dist /s /q) && broccoli build dist",
-    "test:dev": "broccoli serve --port 4300 | testem",
-    "test": "(if exist dist rmdir dist /s /q) && broccoli build dist && testem ci"
+    "test:dev": "(if exist dist rmdir dist /s /q) && broccoli build dist && testem ci",
+    "test": "rm -rf dist && broccoli build dist && testem ci"
   },
   "repository": {
     "type": "git",
