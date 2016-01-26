@@ -1,6 +1,13 @@
 # Frame Messenger
 
+
+[![Build Status](https://api.travis-ci.org/jakedetels/frame-messenger.svg?branch=master)](https://api.travis-ci.org/jakedetels/frame-messenger.svg)
+
 A tiny JavaScript class to simplify communication between different browser frames, supporting both promises and callbacks.
+
+# Installation
+
+`npm install frame-messenger`
 
 # Documentation
 
