@@ -75,7 +75,6 @@
           __name__: this.targetName,
           __origin_name__: this.name,
           __reply__: callbackId,
-          // __reply__: callback ? callbackId : null,
           __callback__: replyId,
           __error__: err,
           data: data
@@ -88,6 +87,7 @@
             _this.callbacks[callbackId] = { resolve: resolve, reject: reject };
           });
         } else {
+          // Create a no-op callback if none was provided and Promises are not being used
           this.callbacks[callbackId] = function () {};
         }
       }
@@ -103,21 +103,12 @@
         var callbackId = event.data.__callback__;
         var callback = this.callbacks[callbackId];
 
-        // let reply;
-        // if (callback) {
-        //   reply = (err, data, callback) => {
-        //     this.postMessage(data, callback, event.data.__reply__, err);
-        //   };
-        // } else {
-        //   reply = function() {};
-        // }
-
         var reply = function reply(err, data, callback) {
           _this2.postMessage(data, callback, event.data.__reply__, err);
         };
 
         if (callback) {
-          console.debug('deleting callback entry: ', event.data);
+
           delete this.callbacks[callbackId];
 
           if (event.data.__error__) {
