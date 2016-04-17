@@ -52,7 +52,7 @@
       this.frame.addEventListener('message', this._processMessage.bind(this));
 
       function isFrame(win) {
-        return !!(win && win.toString().match('[object Window]'));
+        return !!(win && win.postMessage && typeof win.postMessage === 'function');
       }
     }
 
