@@ -1,6 +1,6 @@
 {
   "name": "frame-messenger",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "a promise-friendly class for communicating between browser frames",
   "main": "dist/FrameMessenger.js",
   "author": "Jake Detels",
