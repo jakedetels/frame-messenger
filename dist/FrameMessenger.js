@@ -71,14 +71,16 @@
           }
         }
 
-        this.targetFrame.postMessage({
+        var messageStr = JSON.stringify({
           __name__: this.targetName,
           __origin_name__: this.name,
           __reply__: callbackId,
           __callback__: replyId,
           __error__: err,
           data: data
-        }, '*');
+        });
+
+        this.targetFrame.postMessage(messageStr, '*');
 
         if (typeof callback === 'function') {
           this.callbacks[callbackId] = callback;
@@ -96,36 +98,38 @@
       value: function _processMessage(event) {
         var _this2 = this;
 
-        var isLegit = event.source === this.targetFrame && event.data.__name__ === this.name;
+        var messageStr = event.data;
+        var message = jsonParse(messageStr);
+        var isLegit = event.source === this.targetFrame && message.__name__ === this.name;
 
         if (!isLegit) return;
 
-        var callbackId = event.data.__callback__;
+        var callbackId = message.__callback__;
         var callback = this.callbacks[callbackId];
 
         var reply = function reply(err, data, callback) {
-          _this2.postMessage(data, callback, event.data.__reply__, err);
+          _this2.postMessage(data, callback, message.__reply__, err);
         };
 
         if (callback) {
 
           delete this.callbacks[callbackId];
 
-          if (event.data.__error__) {
+          if (message.__error__) {
             if (callback.reject) {
-              callback.reject(event.data.__error__);
+              callback.reject(message.__error__);
             } else {
-              callback(event.data.__error__);
+              callback(message.__error__);
             }
           } else {
             if (callback.resolve) {
-              callback.resolve(event.data.data);
+              callback.resolve(message.data);
             } else {
-              callback(null, event.data.data, reply);
+              callback(null, message.data, reply);
             }
           }
         } else if (this._onMessage) {
-          this._onMessage(event.data.data, reply);
+          this._onMessage(message.data, reply);
         } else {
           console.error('No callback existed to handle callback ID ' + callbackId);
         }
@@ -141,4 +145,12 @@
   })();
 
   module.exports = FrameMessenger;
+
+  function jsonParse(str) {
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      return {};
+    }
+  }
 });
